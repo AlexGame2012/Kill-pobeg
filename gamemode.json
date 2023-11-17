@@ -1,1 +1,53 @@
-
+{
+  "Name": "<color=lime>Смертельный</color> забег",
+  "Description": "Сметельный забег так же как и у EdisonPts",
+  "StartClientVersion": 400,
+  "MapLists": [
+    {
+      "MapListId": 12042,
+      "Name": "Карты Для режима"
+    }
+  ],
+  "Parameters": {
+    "Bool": [
+      {
+        "Name": "Damage",
+        "DisplayName": "GmParams/Damage"
+      },
+      {
+        "Name": "PartialDesruction",
+        "DisplayName": "GmParams/PartialDesruction"
+      },
+      {
+        "Name": "LoosenBlocks",
+        "DisplayName": "GmParams/LoosenBlocks"
+      },
+      {
+        "Name": "ПУПСЫ",
+        "DisplayName": "Teams/Red",
+        "Default": true
+      },
+      {
+        "Name": "ТЕСТЕРЫ",
+        "DisplayName": "Teams/Blue",
+        "Default": true
+      },
+      {
+        "Name": "BlueHasNothing",
+        "DisplayName": "GmParams/BlueHasNothing"
+      },
+      {
+        "Name": "FloodFill",
+        "DisplayName": "GmParams/FloodFill"
+      },
+      {
+        "Name": "FillQuad",
+        "DisplayName": "GmParams/FillQuad"
+      },
+      {
+        "Name": "RemoveQuad",
+        "DisplayName": "GmParams/RemoveQuad"
+      }
+    ]
+  }
+}
