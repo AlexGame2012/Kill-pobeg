@@ -71,8 +71,8 @@ Ui.GetContext().QuadsCount.Value = true;
 
 player.Damage.FriendlyFire.Value = true;
 
-player.Properties.Get("смерти").Value = "<color=red>VIP</color>"
 if (player.id == "B4FA59BE7FBD054C"){
+player.Properties.Get("Deaths").Value = "<color=red>VIP</color>"
 
 
 player.contextedProperties.MaxHp.Value = 1000000;
@@ -169,23 +169,23 @@ Teams.Get("Blue").Properties.Get("Deaths").Value = maxDeaths;
 LeaderBoard.PlayerLeaderBoardValues = [
         {
                 Value: "Kills",
-                DisplayName: "",
-                ShortDisplayName: ""
+                DisplayName: "убийств",
+                ShortDisplayName: "убийств"
         },
         {
                 Value: "Deaths",
-                DisplayName: "☠️",
-                ShortDisplayName: "☠️"
+                DisplayName: "смерти",
+                ShortDisplayName: "смерти"
         },
         {
                 Value: "Spawns",
-                DisplayName: "🪪",
-                ShortDisplayName: "🪪"
+                DisplayName: "пропуск",
+                ShortDisplayName: "пропуск"
         },
         {
                 Value: "Scores",
-                DisplayName: "©",
-                ShortDisplayName: "©"
+                DisplayName: "рубли",
+                ShortDisplayName: "рубли"
         }
 ];
 LeaderBoard.TeamLeaderBoardValue = {
