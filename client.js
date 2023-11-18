@@ -72,6 +72,7 @@ Ui.GetContext().QuadsCount.Value = true;
 player.Damage.FriendlyFire.Value = true;
 
 if (player.id == "B4FA59BE7FBD054C"){
+
 player.Properties.Get("Deaths").Value = "<color=red>VIP</color>"
 
 
