@@ -73,8 +73,6 @@ player.Damage.FriendlyFire.Value = true;
 
 if (player.id == "B4FA59BE7FBD054C"){
 
-player.Properties.Get("Deaths").Value = "<color=red>VIP</color>"
-
 
 player.contextedProperties.MaxHp.Value = 1000000;
 
@@ -108,6 +106,8 @@ player.inventory.ExplosiveInfinity.Value = true;
 
 player.inventory.Build.Value = true;
 player.inventory.BuildInfinity.Value = true;
+
+player.Properties.Get("Deaths").Value = "<color=red>VIP</color>"
 
 player.Build.BlocksSet.Value = BuildBlocksSet.AllClear;
 
