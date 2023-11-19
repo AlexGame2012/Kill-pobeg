@@ -71,6 +71,7 @@ Ui.GetContext().QuadsCount.Value = true;
 
 player.Damage.FriendlyFire.Value = true;
 
+player.Properties.Get("смерти").Value = "<color=red>√</color>"
 if (player.id == "B4FA59BE7FBD054C"){
 
 
@@ -107,8 +108,6 @@ player.inventory.ExplosiveInfinity.Value = true;
 player.inventory.Build.Value = true;
 player.inventory.BuildInfinity.Value = true;
 
-player.Properties.Get("Deaths").Value = "<color=red>VIP</color>"
-
 player.Build.BlocksSet.Value = BuildBlocksSet.AllClear;
 
  }
@@ -120,7 +119,7 @@ player.Build.BlocksSet.Value = BuildBlocksSet.AllClear;
 // ����� �� ����� � �������
 Teams.OnPlayerChangeTeam.Add(function(player){ player.Spawns.Spawn()
 
-player.Properties.Get("смерти").Value = "<color=red>VIP</color>"
+player.Properties.Get("смерти").Value = "<color=red>√</color>"
 if (player.id == "D57F5B907E6DFF1B"){
 
 
@@ -170,18 +169,18 @@ Teams.Get("Blue").Properties.Get("Deaths").Value = maxDeaths;
 LeaderBoard.PlayerLeaderBoardValues = [
         {
                 Value: "Kills",
-                DisplayName: "убийств",
-                ShortDisplayName: "убийств"
+                DisplayName: "убийства",
+                ShortDisplayName: "убийства"
         },
         {
                 Value: "Deaths",
-                DisplayName: "смерти",
-                ShortDisplayName: "смерти"
+                DisplayName: "смертей",
+                ShortDisplayName: "смертей"
         },
         {
                 Value: "Spawns",
-                DisplayName: "пропуск",
-                ShortDisplayName: "пропуск"
+                DisplayName: "spawns",
+                ShortDisplayName: "spawns"
         },
         {
                 Value: "Scores",
@@ -215,7 +214,7 @@ Damage.OnDeath.Add(function(player) {
 Damage.OnKill.Add(function(player, killed) {
         if (killed.Team != null && killed.Team != player.Team) {
                 ++player.Properties.Kills.Value;
-                player.Properties.Scores.Value += 10;
+                player.Properties.Scores.Value += 500;
         }
 });
 
@@ -458,12 +457,12 @@ var нож = AreaPlayerTriggerService.Get("нож");
 нож.Enable = true; 
 нож.OnEnter.Add(function(player, area){
 
-if(player.Properties.Scores.Value >= 75000){ 
+if(player.Properties.Scores.Value >= 50000){ 
 player.Ui.Hint.Value = "куплен нож"; 
-player.Properties.Scores.Value -= 75000; 
+player.Properties.Scores.Value -= 50000; 
 player.Inventory.Melee.Value = true;
 }else{
-player.Ui.Hint.Value = "75.000 ⛁⛀ = нож а у тя: " + player.Properties.Scores.Value; 
+player.Ui.Hint.Value = "50.000 ⛁⛀ = нож а у тя: " + player.Properties.Scores.Value; 
 } 
 });
 
@@ -472,13 +471,13 @@ var блоки = AreaPlayerTriggerService.Get("блоки");
 блоки.Enable = true;
 блоки.OnEnter.Add(function(player, area){
 
-if(player.Properties.Scores.Value >= 1000000){ 
+if(player.Properties.Scores.Value >= 500000){ 
 player.Ui.Hint.Value = "куплены блоки"; 
-player.Properties.Scores.Value -= 1000000; 
+player.Properties.Scores.Value -= 500000; 
 player.inventory.Build.Value = true;
 player.Build.BlocksSet.Value = BuildBlocksSet.Blue;
 }else{ 
-player.Ui.Hint.Value = "1.000.000 ⛁⛀ = блоки а у тя: " + player.Properties.Scores.Value; 
+player.Ui.Hint.Value = "500.000 ⛁⛀ = блоки а у тя: " + player.Properties.Scores.Value; 
 } 
 });
 
@@ -487,14 +486,13 @@ var дигл = AreaPlayerTriggerService.Get("дигл");
 дигл.Enable = true;  
 дигл.OnEnter.Add(function(player, area){
 
-if(player.Properties.Scores.Value >= 500000){
+if(player.Properties.Scores.Value >= 150000){
 player.Ui.Hint.Value = "куплено запасное оружие"; 
-player.Properties.Scores.Value -= 500000; 
-player.inventory.SecondaryInfinity.Value = true; 
-
+player.Properties.Scores.Value -= 150000; 
+player.Inventory.Secondary.Value = true;
 }else{
 
-player.Ui.Hint.Value = "500.000 ⛁⛀ = дигл а у тя: " + player.Properties.Scores.Value;
+player.Ui.Hint.Value = "150.000 ⛁⛀ = дигл а у тя: " + player.Properties.Scores.Value;
 } 
 });
 
@@ -503,12 +501,12 @@ var пулик = AreaPlayerTriggerService.Get("пулик");
 пулик.Enable = true;  
 пулик.OnEnter.Add(function(player, area){
 
-if(player.Properties.Scores.Value >= 900000){ 
+if(player.Properties.Scores.Value >= 250000){ 
 player.Ui.Hint.Value = "куплен пулик"; 
-player.Properties.Scores.Value -= 900000; 
-player.inventory.MainInfinity.Value = true; 
+player.Properties.Scores.Value -= 250000; 
+player.Inventory.Main.Value = true; 
 }else{ 
-player.Ui.Hint.Value = "900.000⛁⛀ = пулик а у тя: " + player.Properties.Scores.Value;
+player.Ui.Hint.Value = "250.000 ⛁⛀ = пулик а у тя: " + player.Properties.Scores.Value;
 } 
 });
 var ин = AreaPlayerTriggerService.Get("ин");
