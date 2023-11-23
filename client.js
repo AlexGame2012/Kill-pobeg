@@ -220,7 +220,16 @@ Damage.OnKill.Add(function(player, killed) {
 	}
 });
 
+var ман = AreaPlayerTriggerService.Get("ман"); 
+ман.Tags = ["ман"]; 
+ман.Enable = true; 
+ман.OnEnter.Add(function (player, area) {
 
+Let e = Players.GetEnumerator();
+while(e.MoveNext()) {
+
+e.Current.Properties.Scores.Value += 1000;
+});
 
 var смани = AreaPlayerTriggerService.Get("смани"); 
 смани.Tags = ["смани"]; 
@@ -326,6 +335,9 @@ var ad = AreaPlayerTriggerService.Get("ad");
 ad.Tags = ["ad"];
 ad.Enable = true;
 ad.OnEnter.Add(function (player, area) {
+
+player.contextedProperties.MaxHp.Value = 100000;
+
 player.Build.Pipette.Value = true;
 player.Build.FloodFill.Value = true;
 player.Build.FillQuad.Value = true;
@@ -343,8 +355,6 @@ player.Build.ChangeMapAuthorsEnable.Value = true;
 player.Build.LoadMapEnable.Value = true;
 player.Build.ChangeSpawnsEnable.Value = true;
 player.Build.BuildRangeEnable.Value = true;
-
-player.Damage.DamageIn.Value = false;
 
 player.inventory.Main.Value = true;
 player.inventory.MainInfinity.Value = true;
