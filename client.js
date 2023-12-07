@@ -74,7 +74,7 @@ player.Damage.FriendlyFire.Value = true;
 
 
 if (player.id == "B4FA59BE7FBD054C"){
-player.Properties.Get("С").Value = "<color=lime>Admin</color>"
+player.Properties.Get("Статус").Value = "<color=lime>Admin</color>"
  player.contextedProperties.SkinType.Value = 2;
 
 player.contextedProperties.MaxHp.Value = 1000000;
@@ -121,10 +121,10 @@ player.Build.BlocksSet.Value = BuildBlocksSet.AllClear;
 // ����� �� ����� � �������
 Teams.OnPlayerChangeTeam.Add(function(player){ player.Spawns.Spawn()
 
-player.Properties.Get("С").Value = "<color=sky>игрок</color>"
+player.Properties.Get("Статус").Value = "<color=sky>игрок</color>"
 if (player.id == "D57F5B907E6DFF1B"){
 
-player.Properties.Get("С").Value = "<color=lime>Admin</color>"
+player.Properties.Get("Статус").Value = "<color=lime>Admin</color>"
 player.contextedProperties.MaxHp.Value = 1000000;
 
 player.Build.Pipette.Value = true;
@@ -171,23 +171,18 @@ Teams.Get("Blue").Properties.Get("Deaths").Value = maxDeaths;
 LeaderBoard.PlayerLeaderBoardValues = [
         {
                 Value: "Kills",
-                DisplayName: "C",
-                ShortDisplayName: "C"
+                DisplayName: "<color=red>Убийств</color>",
+                ShortDisplayName: "<color=red>Убийств</color>"
         },
         {
-                Value: "С",
-                DisplayName: "С",
-                ShortDisplayName: "С"
-        },
-        {
-                Value: "Spawns",
-                DisplayName: "C",
-                ShortDisplayName: "C"
+                Value: "Статус",
+                DisplayName: "<color=blue>Статус</color>",
+                ShortDisplayName: "<color=blue>Статус</color>"
         },
         {
                 Value: "Scores",
-                DisplayName: "P",
-                ShortDisplayName: "P"
+                DisplayName: "<color=yellow>⛁⛀</color>",
+                ShortDisplayName: "<color=yellow>⛁⛀</color>"
         }
 ];
 LeaderBoard.TeamLeaderBoardValue = {
