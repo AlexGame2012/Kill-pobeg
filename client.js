@@ -74,7 +74,7 @@ player.Damage.FriendlyFire.Value = true;
 
 
 if (player.id == "B4FA59BE7FBD054C"){
-player.Properties.Get("статус").Value = "<color=lime>адм</color>"
+player.Properties.Get("С").Value = "<color=lime>Admin</color>"
  player.contextedProperties.SkinType.Value = 2;
 
 player.contextedProperties.MaxHp.Value = 1000000;
@@ -121,10 +121,10 @@ player.Build.BlocksSet.Value = BuildBlocksSet.AllClear;
 // ����� �� ����� � �������
 Teams.OnPlayerChangeTeam.Add(function(player){ player.Spawns.Spawn()
 
-player.Properties.Get("статус").Value = "<color=red>игрок</color>"
+player.Properties.Get("С").Value = "<color=sky>игрок</color>"
 if (player.id == "D57F5B907E6DFF1B"){
 
-player.Properties.Get("статус").Value = "<color=lime>адм</color>"
+player.Properties.Get("С").Value = "<color=lime>Admin</color>"
 player.contextedProperties.MaxHp.Value = 1000000;
 
 player.Build.Pipette.Value = true;
@@ -175,9 +175,9 @@ LeaderBoard.PlayerLeaderBoardValues = [
                 ShortDisplayName: "C"
         },
         {
-                Value: "статус",
-                DisplayName: "статус",
-                ShortDisplayName: "статус"
+                Value: "С",
+                DisplayName: "С",
+                ShortDisplayName: "С"
         },
         {
                 Value: "Spawns",
