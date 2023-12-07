@@ -1,7 +1,7 @@
 {
-  "Name": "<color=lime>Смертельный</color> забег",
-  "Description": "Сметельный забег так же как и у EdisonPts",
-  "StartClientVersion": 400,
+  "Name": "<color=blue>ПаРкУр</color> На АдМиНкУ",
+  "Description": "ПАРКУР НА АДМ + ПОКУПКИ <color=red>Автор: Alex</color>",
+  "StartClientVersion": 505,
   "MapLists": [
     {
       "MapListId": 12188,
