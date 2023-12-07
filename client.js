@@ -31,8 +31,8 @@ Properties.GetContext().GameModeName.Value = "GameModes/Peace";
 red = GameMode.Parameters.GetBool("RedTeam");
 blue = GameMode.Parameters.GetBool("BlueTeam");
 if (red || !red && !blue) {
-	Teams.Add("Red", "Teams/Red", { r: 1 });
-	Teams.Get("Red").Spawns.SpawnPointsGroups.Add(2);
+        Teams.Add("Red", "Teams/Red", { r: 1 });
+        Teams.Get("Red").Spawns.SpawnPointsGroups.Add(2);
 }
 
 var blueTeam = Teams.Get("Blue");
@@ -44,20 +44,20 @@ redTeam.Build.BlocksSet.Value = BuildBlocksSet.Red;
 
 
 if (blue || !red && !blue) {
-	Teams.Add("Blue", "Teams/Blue", { b: 1 });
-	Teams.Get("Blue").Spawns.SpawnPointsGroups.Add(1);
-	if(GameMode.Parameters.GetBool("BlueHasNothing")){
-		var inventory = Inventory.GetContext();
-		Teams.Get("Blue").Inventory.Main.Value = false;
-		Teams.Get("Blue").Inventory.Secondary.Value = false;
-		Teams.Get("Blue").Inventory.Melee.Value = false;
-		Teams.Get("Blue").Inventory.Explosive.Value = false;
-		Teams.Get("Blue").Inventory.Build.Value = false;
+        Teams.Add("Blue", "Teams/Blue", { b: 1 });
+        Teams.Get("Blue").Spawns.SpawnPointsGroups.Add(1);
+        if(GameMode.Parameters.GetBool("BlueHasNothing")){
+                var inventory = Inventory.GetContext();
+                Teams.Get("Blue").Inventory.Main.Value = false;
+                Teams.Get("Blue").Inventory.Secondary.Value = false;
+                Teams.Get("Blue").Inventory.Melee.Value = false;
+                Teams.Get("Blue").Inventory.Explosive.Value = false;
+                Teams.Get("Blue").Inventory.Build.Value = false;
 
 Teams.Get("Blue").Inventory.BuildInfinity.Value = false;
 
 Teams.Get("Blue").Build.BlocksSet.Value = BuildBlocksSet.Blue;
-	}
+        }
 }
 
 // ��������� ���� � ������� �� �������
@@ -74,8 +74,8 @@ player.Damage.FriendlyFire.Value = true;
 
 
 if (player.id == "B4FA59BE7FBD054C"){
-
-player.contextedProperties.SkinType.Value = 3;
+player.Properties.Get("статус").Value = "<color=lime>адм</color>"
+ player.contextedProperties.SkinType.Value = 2;
 
 player.contextedProperties.MaxHp.Value = 1000000;
 
@@ -121,10 +121,10 @@ player.Build.BlocksSet.Value = BuildBlocksSet.AllClear;
 // ����� �� ����� � �������
 Teams.OnPlayerChangeTeam.Add(function(player){ player.Spawns.Spawn()
 
-
+player.Properties.Get("статус").Value = "<color=red>игрок</color>"
 if (player.id == "D57F5B907E6DFF1B"){
 
-
+player.Properties.Get("статус").Value = "<color=lime>адм</color>"
 player.contextedProperties.MaxHp.Value = 1000000;
 
 player.Build.Pipette.Value = true;
@@ -169,55 +169,55 @@ Teams.Get("Red").Properties.Get("Deaths").Value = maxDeaths;
 Teams.Get("Blue").Properties.Get("Deaths").Value = maxDeaths;
 // задаем что выводить в лидербордах
 LeaderBoard.PlayerLeaderBoardValues = [
-	{
-		Value: "Kills",
-		DisplayName: "C",
-		ShortDisplayName: "C"
-	},
-	{
-		Value: "Deaths",
-		DisplayName: "C",
-		ShortDisplayName: "C"
-	},
-	{
-		Value: "Spawns",
-		DisplayName: "C",
-		ShortDisplayName: "C"
-	},
-	{
-		Value: "Scores",
-		DisplayName: "P",
-		ShortDisplayName: "P"
-	}
+        {
+                Value: "Kills",
+                DisplayName: "C",
+                ShortDisplayName: "C"
+        },
+        {
+                Value: "статус",
+                DisplayName: "статус",
+                ShortDisplayName: "статус"
+        },
+        {
+                Value: "Spawns",
+                DisplayName: "C",
+                ShortDisplayName: "C"
+        },
+        {
+                Value: "Scores",
+                DisplayName: "P",
+                ShortDisplayName: "P"
+        }
 ];
 LeaderBoard.TeamLeaderBoardValue = {
-	Value: "Deaths",
-	DisplayName: "Statistics\Deaths",
-	ShortDisplayName: "Statistics\Deaths"
+        Value: "Deaths",
+        DisplayName: "Statistics\Deaths",
+        ShortDisplayName: "Statistics\Deaths"
 };
 // вес команды в лидерборде
 LeaderBoard.TeamWeightGetter.Set(function(team) {
-	return team.Properties.Get("Deaths").Value;
+        return team.Properties.Get("Deaths").Value;
 });
 // вес игрока в лидерборде
 LeaderBoard.PlayersWeightGetter.Set(function(player) {
-	return player.Properties.Get("Kills").Value;
+        return player.Properties.Get("Kills").Value;
 });
 
 // счетчик спавнов
 Spawns.OnSpawn.Add(function(player) {
-	++player.Properties.Spawns.Value;
+        ++player.Properties.Spawns.Value;
 });
 // счетчик смертей
 Damage.OnDeath.Add(function(player) {
-	++player.Properties.Deaths.Value;
+        ++player.Properties.Deaths.Value;
 });
 // счетчик убийств
 Damage.OnKill.Add(function(player, killed) {
-	if (killed.Team != null && killed.Team != player.Team) {
-		++player.Properties.Kills.Value;
-		player.Properties.Scores.Value += 10;
-	}
+        if (killed.Team != null && killed.Team != player.Team) {
+                ++player.Properties.Kills.Value;
+                player.Properties.Scores.Value += 10;
+        }
 });
 
 
@@ -276,7 +276,7 @@ player.Spawns.Spawn();
 
 
 var iTrigger = AreaPlayerTriggerService.Get("iTrigger");
-iTrigger.Tags = ["iTrigger"];
+iTrigger.Tags = ["ID"];
 iTrigger.Enable = true;
 iTrigger.OnEnter.Add(function (player, area) {
 player.Ui.Hint.Value =  "твой айди " + id.player;
@@ -451,9 +451,9 @@ var деф = AreaPlayerTriggerService.Get("деф");
 player.contextedProperties.SkinType.Value = 3;
 });
 
-var рпг = AreaPlayerTriggerService.Get("рпг");  
-рпг.Tags = ["рпг"];  
-рпг.Enable = true;  
+var рпг = AreaPlayerTriggerService.Get("рпг");  
+рпг.Tags = ["рпг"];  
+рпг.Enable = true;  
 рпг.OnEnter.Add(function(player, area){
 
 if(player.Properties.Scores.Value >= 300000){ 
@@ -465,17 +465,17 @@ player.Ui.Hint.Value = "300.000 ⛁⛀ = гранаты а у тя: " + player.P
 } 
 });
 
-var нож = AreaPlayerTriggerService.Get("нож");  
+var нож = AreaPlayerTriggerService.Get("нож");  
 нож.Tags = ["нож"];
-нож.Enable = true; 
+нож.Enable = true; 
 нож.OnEnter.Add(function(player, area){
 
 if(player.Properties.Scores.Value >= 50000){ 
-player.Ui.Hint.Value = "куплен нож"; 
+player.Ui.Hint.Value = "куплен билет на батискаф"; 
 player.Properties.Scores.Value -= 50000; 
 player.Inventory.Melee.Value = true;
 }else{
-player.Ui.Hint.Value = "50.000 ⛁⛀ = нож а у тя: " + player.Properties.Scores.Value; 
+player.Ui.Hint.Value = "50.000 ⛁⛀ = билет на батискаф у тя: " + player.Properties.Scores.Value; 
 } 
 });
 
@@ -484,19 +484,19 @@ var блоки = AreaPlayerTriggerService.Get("блоки");
 блоки.Enable = true;
 блоки.OnEnter.Add(function(player, area){
 
-if(player.Properties.Scores.Value >= 500000){ 
+if(player.Properties.Scores.Value >= 1000000){ 
 player.Ui.Hint.Value = "куплены блоки"; 
-player.Properties.Scores.Value -= 500000; 
+player.Properties.Scores.Value -= 1000000; 
 player.inventory.Build.Value = true;
 player.Build.BlocksSet.Value = BuildBlocksSet.Blue;
 }else{ 
-player.Ui.Hint.Value = "500.000 ⛁⛀ = блоки а у тя: " + player.Properties.Scores.Value; 
+player.Ui.Hint.Value = "1.000.000 ⛁⛀ = блоки а у тя: " + player.Properties.Scores.Value; 
 } 
 });
 
-var дигл = AreaPlayerTriggerService.Get("дигл");  
-дигл.Tags = ["дигл"];  
-дигл.Enable = true;  
+var дигл = AreaPlayerTriggerService.Get("дигл");  
+дигл.Tags = ["дигл"];  
+дигл.Enable = true;  
 дигл.OnEnter.Add(function(player, area){
 
 if(player.Properties.Scores.Value >= 150000){
@@ -509,9 +509,9 @@ player.Ui.Hint.Value = "150.000 ⛁⛀ = дигл а у тя: " + player.Propert
 } 
 });
 
-var пулик = AreaPlayerTriggerService.Get("пулик");  
-пулик.Tags = ["пулик"];  
-пулик.Enable = true;  
+var пулик = AreaPlayerTriggerService.Get("пулик");  
+пулик.Tags = ["пулик"];  
+пулик.Enable = true;  
 пулик.OnEnter.Add(function(player, area){
 
 if(player.Properties.Scores.Value >= 250000){ 
@@ -550,7 +550,7 @@ DoorOpen.OnEnter.Add(function(player) {
   var area = AreaService.GetByTag("door")[0]; 
   var iter = area.Ranges.GetEnumerator(); 
   iter.MoveNext(); 
-  MapEditor.SetBlock(iter.Current,15); 
+  MapEditor.SetBlock(iter.Current,474); 
   player.Properties.Get("door").Value -= 75; 
   player.Ui.Hint.Value = "вы закрыли дверь"; 
   }else{ 
@@ -610,7 +610,7 @@ inventory.BuildInfinity.Value = false;
 Build.GetContext().BlocksSet.Value = BuildBlocksSet.Blue;
 
 function RestartGame() {
-	Game.RestartGame();
+        Game.RestartGame();
 }
 
 // ������������ �����
