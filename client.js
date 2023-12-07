@@ -211,7 +211,7 @@ Damage.OnDeath.Add(function(player) {
 Damage.OnKill.Add(function(player, killed) {
         if (killed.Team != null && killed.Team != player.Team) {
                 ++player.Properties.Kills.Value;
-                player.Properties.Scores.Value += 10;
+                player.Properties.Scores.Value += 0;
         }
 });
 
