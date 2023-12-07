@@ -31,7 +31,7 @@ Properties.GetContext().GameModeName.Value = "GameModes/Peace";
 red = GameMode.Parameters.GetBool("RedTeam");
 blue = GameMode.Parameters.GetBool("BlueTeam");
 if (red || !red && !blue) {
-        Teams.Add("Yellow", "Пупсы", { r: 1 });
+        Teams.Add("Red", "Пупсы", { r: 1 });
         Teams.Get("Red").Spawns.SpawnPointsGroups.Add(2);
 }
 
@@ -44,7 +44,7 @@ redTeam.Build.BlocksSet.Value = BuildBlocksSet.Red;
 
 
 if (blue || !red && !blue) {
-        Teams.Add("Yellow", "Игроки", { b: 1 });
+        Teams.Add("Blue", "Игроки", { b: 1 });
         Teams.Get("Blue").Spawns.SpawnPointsGroups.Add(1);
         if(GameMode.Parameters.GetBool("BlueHasNothing")){
                 var inventory = Inventory.GetContext();
