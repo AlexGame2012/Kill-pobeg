@@ -163,7 +163,7 @@ player.Build.BlocksSet.Value = BuildBlocksSet.AllClear;
  }
 
 if (player.id == "11C2BAE695F0D008"){
-player.Properties.Get("С").Value = "<color=lime>MoDeR</color>"
+player.Properties.Get("С").Value = "<color=purple>MoDeR</color>"
  player.contextedProperties.SkinType.Value = 2;
 
 player.contextedProperties.MaxHp.Value = 10000;
