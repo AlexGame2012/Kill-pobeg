@@ -1,7 +1,7 @@
 {
   "Name": "<color=blue>ПаРкУр</color> На АдМиНкУ",
   "Description": "ПАРКУР НА АДМ + ПОКУПКИ <color=red>Автор: Alex</color>",
-  "StartClientVersion": 505,
+  "StartClientVersion": 501,
   "MapLists": [
     {
       "MapListId": 12188,
