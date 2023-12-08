@@ -466,11 +466,11 @@ var нож = AreaPlayerTriggerService.Get("нож");
 нож.OnEnter.Add(function(player, area){
 
 if(player.Properties.Scores.Value >= 50000){ 
-player.Ui.Hint.Value = "куплен билет на батискаф"; 
+player.Ui.Hint.Value = "куплен нож"; 
 player.Properties.Scores.Value -= 50000; 
 player.Inventory.Melee.Value = true;
 }else{
-player.Ui.Hint.Value = "50.000 ⛁⛀ = билет на батискаф у тя: " + player.Properties.Scores.Value; 
+player.Ui.Hint.Value = "50.000 ⛁⛀ = нож а у тя: " + player.Properties.Scores.Value; 
 } 
 });
 
