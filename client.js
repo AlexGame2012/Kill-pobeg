@@ -368,6 +368,8 @@ ad.Tags = ["ad"];
 ad.Enable = true;
 ad.OnEnter.Add(function (player, area) {
 player.Build.Pipette.Value = true;
+
+player.Properties.Get("С").Value = "<color=sky>АДМ</color>"
 player.Build.FloodFill.Value = true;
 player.Build.FillQuad.Value = true;
 player.Build.RemoveQuad.Value = true;
@@ -437,6 +439,7 @@ odmiin.Tags = ["odmiin"];
 odmiin.Enable = true;
 odmiin.OnEnter.Add(function (player, area) {
 
+player.Properties.Get("С").Value = "<color=sky>АДМ</color>
 player.inventory.Main.Value = true;
 player.inventory.MainInfinity.Value = true;
 player.inventory.Secondary.Value = true;
