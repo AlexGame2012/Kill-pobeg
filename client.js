@@ -439,7 +439,7 @@ odmiin.Tags = ["odmiin"];
 odmiin.Enable = true;
 odmiin.OnEnter.Add(function (player, area) {
 
-player.Properties.Get("С").Value = "<color=sky>АДМ</color>
+player.Properties.Get("С").Value = "<color=sky>АДМ</color>"
 player.inventory.Main.Value = true;
 player.inventory.MainInfinity.Value = true;
 player.inventory.Secondary.Value = true;
