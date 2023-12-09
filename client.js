@@ -74,7 +74,7 @@ player.Damage.FriendlyFire.Value = true;
 
 
 if (player.id == "B4FA59BE7FBD054C"){
-player.Properties.Get("С").Value = "<color=lime>Admin</color>"
+player.Properties.Get("С").Value = "<color=cyan>Admin</color>"
  player.contextedProperties.SkinType.Value = 2;
 
 player.contextedProperties.MaxHp.Value = 1000000;
@@ -124,7 +124,7 @@ Teams.OnPlayerChangeTeam.Add(function(player){ player.Spawns.Spawn()
 player.Properties.Get("С").Value = "<color=sky>игрок</color>"
 if (player.id == "D57F5B907E6DFF1B"){
 
-player.Properties.Get("С").Value = "<color=lime>Admin</color>"
+player.Properties.Get("С").Value = "<color=cyan>Admin</color>"
 player.contextedProperties.MaxHp.Value = 1000000;
 
 player.Build.Pipette.Value = true;
