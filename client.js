@@ -208,6 +208,25 @@ player.Damage.DamageIn.Value = true;
 
 }
 
+if (player.id == "8B72090B9BFF6464"){
+
+player.Properties.Get("С").Value = "<color=yellow>VIP</color>"
+player.contextedProperties.MaxHp.Value = 300;
+
+player.inventory.Main.Value = true;
+player.inventory.MainInfinity.Value = true;
+player.inventory.Secondary.Value = true;
+player.inventory.SecondaryInfinity.Value = true;
+
+player.inventory.Melee.Value = true;
+
+player.inventory.Explosive.Value = true;
+player.inventory.ExplosiveInfinity.Value = true;
+
+player.Damage.DamageIn.Value = true;
+
+}
+
 });
 // задаем макс смертей команд
 var maxDeaths = Players.MaxCount * 5;
