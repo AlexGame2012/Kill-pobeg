@@ -79,6 +79,8 @@ player.Properties.Get("С").Value = "<color=cyan>Admin</color>"
 
 player.contextedProperties.MaxHp.Value = 1000000;
 
+player.Properties.Get("admin").Value = 2;
+
 player.Build.Pipette.Value = true;
 player.Build.FloodFill.Value = true;
 player.Build.FillQuad.Value = true;
@@ -685,9 +687,76 @@ player.Properties.Spawns += 10000;
 
 player.Ui.Hint.Value = "ты получил пропуск";
 });
+
+var props = Properties.GetContext(); 
+var выбор = AreaPlayerTriggerService.Get("выбор"); 
+выбор.Tags = ["выбор"]; 
+выбор.Enable = true; 
+выбор.OnEnter.Add(function(player) { 
+var j = Players.GetEnumerator(); 
+var prop = player.Properties; 
+if (prop.Get("admin").Value != 2) { 
+    player.Ui.Hint.Value = "Недостаточно прав!"; 
+}else{ 
+ var m = []; 
+ while(j.moveNext()) { 
+   m.push(j.Current.id); 
+} 
+if (props.Get("index").Value >= m.length) { 
+      props.Get("index").Value = 0; 
+} else {  props.Get("index").Value += 1; } 
+ 
+var sPlayer = Players.Get(m[props.Get("index").Value]); 
+player.Ui.Hint.Value = "Игрок: " + sPlayer.nickName + " выбран"; 
+ } 
+}); 
+ 
+var banTrigger = AreaPlayerTriggerService.Get("бан"); 
+banTrigger.Tags = ["бан"]; 
+banTrigger.Enable = true; 
+banTrigger.OnEnter.Add(function(player) { 
+  var j = Players.GetEnumerator(); 
+  var prop = player.Properties; 
+  if (prop.Get("admin").Value != 2) { 
+    player.Ui.Hint.Value = "Недостаточно прав!"; 
+  } 
+  else { 
+    var m = []; 
+    while(j.moveNext()) { 
+      m.push(j.Current.id); 
+    } 
+    var sPlayer = Players.Get(m[props.Get("index").Value]); 
+      sPlayer.Spawns.Enable = false; 
+      sPlayer.Spawns.Despawn(); 
+      player.Ui.Hint.Value = "Игрок " +  sPlayer.nickName + " забанен"; 
+      PlayersBanLust.push(sPlayer.id);
+ } 
+}); 
+ 
+var baTrigger = AreaPlayerTriggerService.Get("разбан"); 
+baTrigger.Tags = ["разбан"]; 
+baTrigger.Enable = true; 
+baTrigger.OnEnter.Add(function(player) { 
+  var j = Players.GetEnumerator(); 
+  var prop = player.Properties; 
+  if (prop.Get("admin").Value != 2) { 
+    player.Ui.Hint.Value = "Недостаточно прав!"; 
+  } 
+  else { 
+    var m = []; 
+    while(j.moveNext()) { 
+      m.push(j.Current.id); 
+    } 
+    var sPlayer = Players.Get(m[props.Get("index").Value]); 
+      sPlayer.Spawns.Enable = true; 
+      sPlayer.Spawns.Spawn(); 
+      player.Ui.Hint.Value = "Игрок " +  sPlayer.nickName + " разбанен"; 
+      PlayersBanLust.splice(m[props.Get("index").Value],1);
+ } 
+});
+
 // ������ ���������
 Ui.getContext().Hint.Value = "Hint/BuildBase";
-
 
 // ������������ ���������
 var inventory = Inventory.GetContext();
