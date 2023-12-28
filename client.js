@@ -345,15 +345,6 @@ var мани3 = AreaPlayerTriggerService.Get("мани3");
 player.Properties.Scores.Value += 500;
 });
 
-var ban = AreaPlayerTriggerService.Get("ban"); 
-ban.Tags = ["ban"]; 
-ban.Enable = true; 
-ban.OnEnter.Add(function (player, area) {     
-
-player.Spawns.Enable = false; 
-player.Spawns.Despawn();
-});
-
 var спавн  = AreaPlayerTriggerService.Get("спавн");
 спавн.Tags = ["спавн"];
 спавн.Enable = true;
