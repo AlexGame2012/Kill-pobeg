@@ -250,6 +250,30 @@ player.Damage.DamageIn.Value = true;
 
 }
 
+if (player.id == "542F8E97ABB35965"){
+
+player.Properties.Get("С").Value = "<color=purple>MoDeR</color>"
+player.contextedProperties.MaxHp.Value = 700;
+
+player.inventory.Main.Value = true;
+player.inventory.MainInfinity.Value = true;
+player.inventory.Secondary.Value = true;
+player.inventory.SecondaryInfinity.Value = true;
+
+player.inventory.Melee.Value = true;
+
+player.inventory.Explosive.Value = true;
+player.inventory.ExplosiveInfinity.Value = true;
+
+player.inventory.Build.Value = true;
+player.inventory.BuildInfinity.Value = true;
+
+player.Build.FlyEnable.Value = true;
+player.Damage.DamageIn.Value = true;
+
+}
+
+
 if (player.id == "8B72090B9BFF6464"){
 player.Properties.Get("С").Value = "<color=red>БАН</color>"
 
