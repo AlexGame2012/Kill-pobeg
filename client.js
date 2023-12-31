@@ -273,7 +273,6 @@ player.Damage.DamageIn.Value = true;
 
 }
 
-
 if (player.id == "8B72090B9BFF6464"){
 player.Properties.Get("С").Value = "<color=red>БАН</color>"
 
