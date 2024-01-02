@@ -805,7 +805,7 @@ baTrigger.OnEnter.Add(function(player) {
  } 
 });
 
-var мани VIP = AreaPlayerTriggerService.Get("мани"); 
+var мани VIP = AreaPlayerTriggerService.Get("VIP"); 
 мани.Tags = ["VIP"]; 
 мани.Enable = true; 
 мани.OnEnter.Add(function (player, area) {
