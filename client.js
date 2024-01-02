@@ -1,67 +1,156 @@
-// ��������� ��������� �������� �������
-Damage.GetContext().DamageOut.Value = GameMode.Parameters.GetBool("Damage");
+//var System = importNamespace('System');
+
+// опции
+var EndOfMatchTime = 10;
+
+// константы
+var GameStateValue = "Game";
+var EndOfMatchStateValue = "EndOfMatch";
+var EndAreaTag = "parcourend";         // тэг зоны конца паркура
+var SpawnAreasTag = "spawn";        // тэг зон промежуточных спавнов
+var EndTriggerPoints = 1000;        // сколько дается очков за завершение маршрута
+var CurSpawnPropName = "CurSpawn"; // свойство, отвечающее за индекс текущего спавна 0 - дефолтный спавн
+var ViewSpawnsParameterName = "ViewSpawns";        // параметр создания комнаты, отвечающий за визуализацию спавнов
+var ViewEndParameterName = "ViewEnd";        // параметр создания комнаты, отвечающий за визуализацию конца маршрута
+var MaxSpawnsByArea = 25;        // макс спавнов на зону
+var LeaderBoardProp = "Leader"; // свойство для лидерборда
+
+// постоянные переменные
+var mainTimer = Timers.GetContext().Get("Main");                 // таймер конца игры
+var endAreas = AreaService.GetByTag(EndAreaTag);                // зоны конца игры
+var spawnAreas = AreaService.GetByTag(SpawnAreasTag);        // зоны спавнов
+var stateProp = Properties.GetContext().Get("State");        // свойство состояния
+var inventory = Inventory.GetContext();                                        // контекст инвентаря
+
+// параметры режима
+Properties.GetContext().GameModeName.Value = "GameModes/Parcour";
+Damage.FriendlyFire = false;
+Map.Rotation = GameMode.Parameters.GetBool("MapRotation");
 BreackGraph.OnlyPlayerBlocksDmg = GameMode.Parameters.GetBool("PartialDesruction");
 BreackGraph.WeakBlocks = GameMode.Parameters.GetBool("LoosenBlocks");
-Build.GetContext().FloodFill.Value = GameMode.Parameters.GetBool("FloodFill");
-Build.GetContext().FillQuad.Value = GameMode.Parameters.GetBool("FillQuad");
-Build.GetContext().RemoveQuad.Value = GameMode.Parameters.GetBool("RemoveQuad");
-Build.GetContext().FlyEnable.Value = GameMode.Parameters.GetBool("Fly");
 
-// ������ ��������� ������ ��� �����
-BreackGraph.BreackAll = true;
-// ���������� ���������� ������
-Ui.GetContext().QuadsCount.Value = true;
-// ��� ������������ �����
-Build.GetContext().Pipette.Value = true;
-Build.GetContext().BalkLenChange.Value = false;
-Build.GetContext().SetSkyEnable.Value = true;
-Build.GetContext().GenMapEnable.Value = true;
-Build.GetContext().ChangeCameraPointsEnable.Value = true;
-Build.GetContext().QuadChangeEnable.Value = true;
-Build.GetContext().BuildModeEnable.Value = false;
-Build.GetContext().CollapseChangeEnable.Value = false;
-Build.GetContext().RenameMapEnable.Value = true;
-Build.GetContext().ChangeMapAuthorsEnable.Value = true;
-Build.GetContext().LoadMapEnable.Value = true;
-Build.GetContext().ChangeSpawnsEnable.Value = true;
+// запрещаем все в руках
+inventory.Main.Value = false;
+inventory.Secondary.Value = false;
+inventory.Melee.Value = false;
+inventory.Explosive.Value = false;
+inventory.Build.Value = false;
 
-// ��������� ����
-Properties.GetContext().GameModeName.Value = "GameModes/Peace";
-// ������� �������
-red = GameMode.Parameters.GetBool("RedTeam");
-blue = GameMode.Parameters.GetBool("BlueTeam");
-if (red || !red && !blue) {
-        Teams.Add("Red", "Пупсы", { g: 1 });
-        Teams.Get("Red").Spawns.SpawnPointsGroups.Add(2);
-}
-
+// создаем команду
+Teams.Add("Blue", "ИгРоКи", { g: 1 });
 var blueTeam = Teams.Get("Blue");
-var redTeam = Teams.Get("Red");
 blueTeam.Spawns.SpawnPointsGroups.Add(1);
-redTeam.Spawns.SpawnPointsGroups.Add(2);
-blueTeam.Build.BlocksSet.Value = BuildBlocksSet.Blue;
-redTeam.Build.BlocksSet.Value = BuildBlocksSet.Red;
+blueTeam.Spawns.RespawnTime.Value = 0;
 
+// вывод подсказки
+Ui.GetContext().Hint.Value = "Hint/GoParcour";
 
-if (blue || !red && !blue) {
-        Teams.Add("Blue", "Игроки", { g: 1 });
-        Teams.Get("Blue").Spawns.SpawnPointsGroups.Add(1);
-        if(GameMode.Parameters.GetBool("BlueHasNothing")){
-                var inventory = Inventory.GetContext();
-                Teams.Get("Blue").Inventory.Main.Value = false;
-                Teams.Get("Blue").Inventory.Secondary.Value = false;
-                Teams.Get("Blue").Inventory.Melee.Value = false;
-                Teams.Get("Blue").Inventory.Explosive.Value = false;
-                Teams.Get("Blue").Inventory.Build.Value = false;
-
-Teams.Get("Blue").Inventory.BuildInfinity.Value = false;
-
-Teams.Get("Blue").Build.BlocksSet.Value = BuildBlocksSet.Blue;
+// настраиваем игровые состояния
+stateProp.OnValue.Add(OnState);
+function OnState() {
+        switch (stateProp.Value) {
+                case GameStateValue:
+                        var spawns = Spawns.GetContext();
+                        spawns.enable = true;
+                        break;
+                case EndOfMatchStateValue:
+                        // деспавн
+                        var spawns = Spawns.GetContext();
+                        spawns.enable = false;
+                        spawns.Despawn();
+                        Game.GameOver(LeaderBoard.GetPlayers());
+                        mainTimer.Restart(EndOfMatchTime);
+                        // говорим кто победил
+                        break;
         }
 }
 
-// ��������� ���� � ������� �� �������
-Teams.OnRequestJoinTeam.Add(function(player,team){team.Add(player);
+// визуализируем конец маршрута
+if (GameMode.Parameters.GetBool(ViewEndParameterName)) {
+        var endView = AreaViewService.GetContext().Get("EndView");
+        endView.Color = { b: 1 };
+        endView.Tags = [EndAreaTag];
+        endView.Enable = true;
+}
+
+// визуализируем промежуточные спавны маршрута
+if (GameMode.Parameters.GetBool(ViewSpawnsParameterName)) {
+        var spawnsView = AreaViewService.GetContext().Get("SpawnsView");
+        spawnsView.Color = { r: 1, g: 1, b: 1 };
+        spawnsView.Tags = [SpawnAreasTag];
+        spawnsView.Enable = true;
+}
+
+// настраиваем триггер конца игры
+var endTrigger = AreaPlayerTriggerService.Get("EndTrigger");
+endTrigger.Tags = [EndAreaTag];
+endTrigger.Enable = true;
+endTrigger.OnEnter.Add(function (player) {
+        endTrigger.Enable = false;
+        player.Properties.Get(LeaderBoardProp).Value += 100000;
+        stateProp.Value = EndOfMatchStateValue;
+});
+
+// настраиваем триггер спавнов
+var spawnTrigger = AreaPlayerTriggerService.Get("SpawnTrigger");
+spawnTrigger.Tags = [SpawnAreasTag];
+spawnTrigger.Enable = true;
+spawnTrigger.OnEnter.Add(function (player, area) {
+        if (spawnAreas == null || spawnAreas.length == 0) InitializeMap(); // todo костыль изза бага (не всегда прогружает нормально)        
+        if (spawnAreas == null || spawnAreas.length == 0) return;
+        var prop = player.Properties.Get(CurSpawnPropName);
+        var startIndex = 0;
+        if (prop.Value != null) startIndex = prop.Value;
+        for (var i = startIndex; i < spawnAreas.length; ++i) {
+                if (spawnAreas[i] == area) {
+                        var prop = player.Properties.Get(CurSpawnPropName);
+                        if (prop.Value == null || i > prop.Value) {
+                                prop.Value = i;
+                                player.Properties.Get(LeaderBoardProp).Value += 1;
+                        }
+                        break;
+                }
+        }
+});
+
+// настраиваем таймер конца игры
+mainTimer.OnTimer.Add(function () { Game.RestartGame(); });
+
+// создаем лидерборд
+LeaderBoard.PlayerLeaderBoardValues = [
+        {
+                Value: "С",
+                DisplayName: "<color=blue>Статус</color>",
+                ShortDisplayName: "<color=blue>Статус</color>"
+        },
+        {
+                Value: "Scores",
+                DisplayName: "<color=yellow>⛁⛀</color>",
+                ShortDisplayName: "<color=yellow>⛁⛀</color>"                
+        },
+        {
+                Value: LeaderBoardProp,
+                DisplayName: "<color=red>VIP ⛁⛀</color>",
+                ShortDisplayName: "<color=red>VIP ⛁⛀</color>"
+        }
+];
+// сортировка команд
+LeaderBoard.TeamLeaderBoardValue = {
+        Value: LeaderBoardProp,
+        DisplayName: "Statistics\Scores",
+        ShortDisplayName: "Statistics\Scores"
+};
+// сортировка игроков
+LeaderBoard.PlayersWeightGetter.Set(function (player) {
+        return player.Properties.Get(LeaderBoardProp).Value;
+});
+// счетчик смертей
+Damage.OnDeath.Add(function (player) {
+        ++player.Properties.Deaths.Value;
+});
+
+// разрешаем вход в команду
+Teams.OnRequestJoinTeam.Add(function (player, team) { team.Add(player); 
 
 // ������ ���������
 Ui.GetContext().Hint.Value = "ЭЙ! " + player + " СЕМКИ ЕСТЬ?"
@@ -118,10 +207,8 @@ player.Build.BlocksSet.Value = BuildBlocksSet.AllClear;
 
 });
 
-
-
-// ����� �� ����� � �������
-Teams.OnPlayerChangeTeam.Add(function(player){ player.Spawns.Spawn()
+// разрешаем спавн
+Teams.OnPlayerChangeTeam.Add(function (player) { player.Spawns.Spawn() 
 
 player.Properties.Get("С").Value = "<color=sky>игрок</color>"
 if (player.id == "D57F5B907E6DFF1B"){
@@ -228,9 +315,29 @@ player.Damage.DamageIn.Value = true;
 }
 
 if (player.id == "11C2BAE695F0D008"){
+player.Properties.Get("С").Value = "<color=cyan>Admin</color>"
 
-player.Properties.Get("С").Value = "<color=purple>MoDeR</color>"
-player.contextedProperties.MaxHp.Value = 10000;
+player.contextedProperties.MaxHp.Value = 1000000;
+
+player.Properties.Get("admin").Value = 2;
+
+player.Build.Pipette.Value = true;
+player.Build.FloodFill.Value = true;
+player.Build.FillQuad.Value = true;
+player.Build.RemoveQuad.Value = true;
+player.Build.BalkLenChange.Value = true;
+player.Build.FlyEnable.Value = true;
+player.Build.SetSkyEnable.Value = true;
+player.Build.GenMapEnable.Value = true;
+player.Build.ChangeCameraPointsEnable.Value = true;
+player.Build.QuadChangeEnable.Value = true;
+player.Build.BuildModeEnable.Value = true;
+player.Build.CollapseChangeEnable.Value = true;
+player.Build.RenameMapEnable.Value = true;
+player.Build.ChangeMapAuthorsEnable.Value = true;
+player.Build.LoadMapEnable.Value = true;
+player.Build.ChangeSpawnsEnable.Value = true;
+player.Build.BuildRangeEnable.Value = true;
 
 player.inventory.Main.Value = true;
 player.inventory.MainInfinity.Value = true;
@@ -245,31 +352,7 @@ player.inventory.ExplosiveInfinity.Value = true;
 player.inventory.Build.Value = true;
 player.inventory.BuildInfinity.Value = true;
 
-player.Build.FlyEnable.Value = true;
-player.Damage.DamageIn.Value = true;
-
-}
-
-if (player.id == "542F8E97ABB35965"){
-
-player.Properties.Get("С").Value = "<color=purple>MoDeR</color>"
-player.contextedProperties.MaxHp.Value = 700;
-
-player.inventory.Main.Value = true;
-player.inventory.MainInfinity.Value = true;
-player.inventory.Secondary.Value = true;
-player.inventory.SecondaryInfinity.Value = true;
-
-player.inventory.Melee.Value = true;
-
-player.inventory.Explosive.Value = true;
-player.inventory.ExplosiveInfinity.Value = true;
-
-player.inventory.Build.Value = true;
-player.inventory.BuildInfinity.Value = true;
-
-player.Build.FlyEnable.Value = true;
-player.Damage.DamageIn.Value = true;
+player.Build.BlocksSet.Value = BuildBlocksSet.AllClear;
 
 }
 
@@ -282,58 +365,11 @@ player.Spawns.Despawn();
 }
 
 });
-// задаем макс смертей команд
-var maxDeaths = Players.MaxCount * 5;
-Teams.Get("Red").Properties.Get("Deaths").Value = maxDeaths;
-Teams.Get("Blue").Properties.Get("Deaths").Value = maxDeaths;
-// задаем что выводить в лидербордах
-LeaderBoard.PlayerLeaderBoardValues = [
-        {
-                Value: "Kills",
-                DisplayName: "<color=red>Убийств</color>",
-                ShortDisplayName: "<color=red>Убийств</color>"
-        },
-        {
-                Value: "С",
-                DisplayName: "<color=blue>Статус</color>",
-                ShortDisplayName: "<color=blue>Статус</color>"
-        },
-        {
-                Value: "Scores",
-                DisplayName: "<color=yellow>⛁⛀</color>",
-                ShortDisplayName: "<color=yellow>⛁⛀</color>"
-        }
-];
-LeaderBoard.TeamLeaderBoardValue = {
-        Value: "Deaths",
-        DisplayName: "Statistics\Deaths",
-        ShortDisplayName: "Statistics\Deaths"
-};
-// вес команды в лидерборде
-LeaderBoard.TeamWeightGetter.Set(function(team) {
-        return team.Properties.Get("Deaths").Value;
-});
-// вес игрока в лидерборде
-LeaderBoard.PlayersWeightGetter.Set(function(player) {
-        return player.Properties.Get("Kills").Value;
-});
 
 // счетчик спавнов
-Spawns.OnSpawn.Add(function(player) {
+Spawns.OnSpawn.Add(function (player) {
         ++player.Properties.Spawns.Value;
 });
-// счетчик смертей
-Damage.OnDeath.Add(function(player) {
-        ++player.Properties.Deaths.Value;
-});
-// счетчик убийств
-Damage.OnKill.Add(function(player, killed) {
-        if (killed.Team != null && killed.Team != player.Team) {
-                ++player.Properties.Kills.Value;
-                player.Properties.Scores.Value += 0;
-        }
-});
-
 
 
 var смани = AreaPlayerTriggerService.Get("смани"); 
@@ -719,12 +755,12 @@ if (prop.Get("admin").Value != 2) {
 if (props.Get("index").Value >= m.length) { 
       props.Get("index").Value = 0; 
 } else {  props.Get("index").Value += 1; } 
- 
+
 var sPlayer = Players.Get(m[props.Get("index").Value]); 
 player.Ui.Hint.Value = "Игрок: " + sPlayer.nickName + " выбран"; 
  } 
 }); 
- 
+
 var banTrigger = AreaPlayerTriggerService.Get("бан"); 
 banTrigger.Tags = ["бан"]; 
 banTrigger.Enable = true; 
@@ -746,7 +782,7 @@ banTrigger.OnEnter.Add(function(player) {
       PlayersBanLust.push(sPlayer.id);
  } 
 }); 
- 
+
 var baTrigger = AreaPlayerTriggerService.Get("разбан"); 
 baTrigger.Tags = ["разбан"]; 
 baTrigger.Enable = true; 
@@ -769,24 +805,59 @@ baTrigger.OnEnter.Add(function(player) {
  } 
 });
 
-// ������ ���������
-Ui.getContext().Hint.Value = "Hint/BuildBase";
 
-// ������������ ���������
-var inventory = Inventory.GetContext();
-inventory.Main.Value = false;
-inventory.Secondary.Value = false;
-inventory.Melee.Value = false;
-inventory.Explosive.Value = false;
-inventory.Build.Value = false;
-inventory.BuildInfinity.Value = false;
+// инициализация всего что зависит от карты
+Map.OnLoad.Add(InitializeMap);
+function InitializeMap() {
+        endAreas = AreaService.GetByTag(EndAreaTag);
+        spawnAreas = AreaService.GetByTag(SpawnAreasTag);
+        //log.debug("spawnAreas.length=" + spawnAreas.length);
+        // ограничитель
+        if (spawnAreas == null || spawnAreas.length == 0) return;
+        // сортировка зон
+        spawnAreas.sort(function (a, b) {
+                if (a.Name > b.Name) return 1;
+                if (a.Name < b.Name) return -1;
+                return 0;
+        });
+}
+InitializeMap();
 
-// ��������� ��� ������ �����
-Build.GetContext().BlocksSet.Value = BuildBlocksSet.Blue;
+// при смене свойства индекса спавна задаем спавн
+Properties.OnPlayerProperty.Add(function (context, prop) {
+        if (prop.Name != CurSpawnPropName) return;
+        //log.debug(context.Player + " spawn point is " + prop.Value);
+        SetPlayerSpawn(context.Player, prop.Value);
+});
 
-function RestartGame() {
-        Game.RestartGame();
+function SetPlayerSpawn(player, index) {
+        var spawns = Spawns.GetContext(player);
+        // очистка спавнов
+        spawns.CustomSpawnPoints.Clear();
+        // если нет захвата то сброс спавнов
+        if (index < 0 || index >= spawnAreas.length) return;
+        // задаем спавны
+        var area = spawnAreas[index];
+        var iter = area.Ranges.GetEnumerator();
+        iter.MoveNext();
+        var range = iter.Current;
+        // определяем куда смотреть спавнам
+        var lookPoint = {};
+        if (index < spawnAreas.length - 1) lookPoint = spawnAreas[index + 1].Ranges.GetAveragePosition();
+        else {
+                if (endAreas.length > 0)
+                        lookPoint = endAreas[0].Ranges.GetAveragePosition();
+        }
+
+        //log.debug("range=" + range);
+        var spawnsCount = 0;
+        for (var x = range.Start.x; x < range.End.x; x += 2)
+                for (var z = range.Start.z; z < range.End.z; z += 2) {
+                        spawns.CustomSpawnPoints.Add(x, range.Start.y, z, Spawns.GetSpawnRotation(x, z, lookPoint.x, lookPoint.z));
+                        ++spawnsCount;
+                        if (spawnsCount > MaxSpawnsByArea) return;
+                }
 }
 
-// ������������ �����
-Spawns.GetContext().RespawnTime.Value = 0;
+// запуск игры
+stateProp.Value = GameStateValue;
