@@ -805,14 +805,6 @@ baTrigger.OnEnter.Add(function(player) {
  } 
 });
 
-var VIP = AreaPlayerTriggerService.Get("VIP"); 
-VIP.Tags = ["VIP"]; 
-VIP.Enable = true; 
-VIP.OnEnter.Add(function (player, area) {
-
-player.Properties.Get("F").Value += 5;
-});
-
 // инициализация всего что зависит от карты
 Map.OnLoad.Add(InitializeMap);
 function InitializeMap() {
