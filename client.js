@@ -129,7 +129,7 @@ LeaderBoard.PlayerLeaderBoardValues = [
                 ShortDisplayName: "<color=yellow>⛁⛀</color>"                
         },
         {
-                Value: "F"
+                Value: LeaderBoardProp,
                 DisplayName: "<color=red>VIP ⛁⛀</color>",
                 ShortDisplayName: "<color=red>VIP ⛁⛀</color>"
         }
@@ -804,6 +804,7 @@ baTrigger.OnEnter.Add(function(player) {
       PlayersBanLust.splice(m[props.Get("index").Value],1);
  } 
 });
+
 
 // инициализация всего что зависит от карты
 Map.OnLoad.Add(InitializeMap);
