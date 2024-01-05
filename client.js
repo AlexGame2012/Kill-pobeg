@@ -129,7 +129,7 @@ LeaderBoard.PlayerLeaderBoardValues = [
                 ShortDisplayName: "<color=yellow>⛁⛀</color>"                
         },
         {
-                Value: LeaderBoardProp,
+                Value: "F"
                 DisplayName: "<color=red>VIP ⛁⛀</color>",
                 ShortDisplayName: "<color=red>VIP ⛁⛀</color>"
         }
@@ -805,15 +805,13 @@ baTrigger.OnEnter.Add(function(player) {
  } 
 });
 
-var мани VIP = AreaPlayerTriggerService.Get("VIP"); 
-мани.Tags = ["VIP"]; 
-мани.Enable = true; 
-мани.OnEnter.Add(function (player, area) {
+var VIP = AreaPlayerTriggerService.Get("VIP"); 
+VIP.Tags = ["VIP"]; 
+VIP.Enable = true; 
+VIP.OnEnter.Add(function (player, area) {
 
-player.Properties.Get(LeaderBoardProp).Value += 5;
+player.Properties.Get("F").Value += 5;
 });
-
-
 
 // инициализация всего что зависит от карты
 Map.OnLoad.Add(InitializeMap);
