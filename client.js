@@ -404,6 +404,14 @@ var мани3 = AreaPlayerTriggerService.Get("мани3");
 player.Properties.Scores.Value += 500;
 });
 
+var мани4 = AreaPlayerTriggerService.Get("мани4"); 
+мани4.Tags = ["мани4"]; 
+мани4.Enable = true; 
+мани4.OnEnter.Add(function (player, area) {
+
+player.Properties.Get(LeaderBoardProp).Value += 5;
+});
+
 var спавн  = AreaPlayerTriggerService.Get("спавн");
 спавн.Tags = ["спавн"];
 спавн.Enable = true;
