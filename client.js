@@ -685,7 +685,7 @@ player.Ui.Hint.Value = "куплен полëт";
 player.Properties.Get(LeaderBoardProp). Value -= 20000; 
 player.Build.FlyEnable.Value = true;
 }else{ 
-player.Ui.Hint.Value = "25.000 VIP ⛁⛀ =полëт а у тя: " + player.Properties.Get(LeaderBoardProp).Value; 
+player.Ui.Hint.Value = "20.000 VIP ⛁⛀ =полëт а у тя: " + player.Properties.Get(LeaderBoardProp).Value; 
 } 
 });
 
