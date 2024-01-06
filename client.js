@@ -409,9 +409,9 @@ var мани4 = AreaPlayerTriggerService.Get("мани4");
 мани4.Enable = true; 
 мани4.OnEnter.Add(function (player, area) {
 
-player.Properties.Get(LeaderBoardProp).Value += 5;
+player.Properties.Get(LeaderBoardProp).Value += 10;
 
-player.Ui.Hint.Value = "ты получаешь +5 VIP монет";
+player.Ui.Hint.Value = "ты получаешь +10 VIP монет";
 });
 
 var смани2 = AreaPlayerTriggerService.Get("смани2"); 
