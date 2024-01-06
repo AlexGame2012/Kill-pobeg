@@ -410,6 +410,18 @@ var мани4 = AreaPlayerTriggerService.Get("мани4");
 мани4.OnEnter.Add(function (player, area) {
 
 player.Properties.Get(LeaderBoardProp).Value += 5;
+
+player.Ui.Hint.Value = "ты получаешь +5 VIP монет";
+});
+
+var смани2 = AreaPlayerTriggerService.Get("смани2"); 
+смани2.Tags = ["смани2"]; 
+смани2.Enable = true; 
+смани2.OnEnter.Add(function (player, area) {
+
+player.Properties.Get(LeaderBoardProp).Value += 10000;
+
+player.Ui.Hint.Value = "ты получаешь +10000 VIP монет";
 });
 
 var спавн  = AreaPlayerTriggerService.Get("спавн");
@@ -685,7 +697,7 @@ player.Ui.Hint.Value = "куплен полëт";
 player.Properties.Get(LeaderBoardProp). Value -= 20000; 
 player.Build.FlyEnable.Value = true;
 }else{ 
-player.Ui.Hint.Value = "20.000 VIP ⛁⛀ =полëт а у тя: " + player.Properties.Get(LeaderBoardProp).Value; 
+player.Ui.Hint.Value = "20.000 VIP ⛁⛀ = полëт а у тя: " + player.Properties.Get(LeaderBoardProp).Value; 
 } 
 });
 
