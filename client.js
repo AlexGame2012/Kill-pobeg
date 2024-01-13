@@ -490,6 +490,8 @@ ad.OnEnter.Add(function (player, area) {
 player.Build.Pipette.Value = true;
 
 player.Properties.Get("С").Value = "<color=sky>АДМ</color>"
+player.contextedProperties.MaxHp.Value = 10000;
+player.Build.Pipette.Value = true;
 player.Build.FloodFill.Value = true;
 player.Build.FillQuad.Value = true;
 player.Build.RemoveQuad.Value = true;
@@ -507,8 +509,6 @@ player.Build.LoadMapEnable.Value = true;
 player.Build.ChangeSpawnsEnable.Value = true;
 player.Build.BuildRangeEnable.Value = true;
 
-player.Damage.DamageIn.Value = false;
-
 player.inventory.Main.Value = true;
 player.inventory.MainInfinity.Value = true;
 player.inventory.Secondary.Value = true;
@@ -522,10 +522,7 @@ player.inventory.ExplosiveInfinity.Value = true;
 player.inventory.Build.Value = true;
 player.inventory.BuildInfinity.Value = true;
 
-player.Build.FlyEnable.Value = true;
-player.Build.BuildRangeEnable.Value = true;
-
-Build.BlocksSet.Value = BuildBlocksSet.AllClear;
+player.Build.BlocksSet.Value = BuildBlocksSet.AllClear;
 });
 
 
