@@ -799,7 +799,7 @@ player.Spawns.Spawn();
 
 });
 var key = AreaPlayerTriggerService.Get("key");
-key.Tags = ["key"];
+key.Tags = ["ключ"];
 key.Enable = true;
 key.OnEnter.Add(function(player){
 
