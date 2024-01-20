@@ -761,7 +761,11 @@ player.inventory.Secondary.Value = false; 
 player.ContextedProperties.SkinType.Value = 0;  
 player.ContextedProperties.MaxHp.Value = 100;  
 
-player.Ui.Hint.Value = "РЕЖИМ ПВП ВЫКЛ!"; 
+player.Ui.Hint.Value = "РЕЖИМ ПВП ВЫКЛ!";   
+
+}
+
+});
 
 var ин = AreaPlayerTriggerService.Get("ин");
 ин.Tags = ["ин"];
