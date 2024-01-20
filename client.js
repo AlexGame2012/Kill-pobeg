@@ -736,6 +736,33 @@ player.Ui.Hint.Value = "20.000 VIP ⛁⛀ = полëт а у тя: " + player.Pr
 } 
 });
 
+var pvp = AreaPlayerTriggerService.Get("pvp")  
+pvp.Tags = ["pvp"];    
+pvp.Enable = true;    
+pvp.OnEnter.Add(function(player) {  
+player.inventory.Melee.Value = true;  
+player.inventory.Main.Value = true;  
+
+player.inventory.Secondary.Value = true;  
+player.ContextedProperties.SkinType.Value = 0;  
+player.ContextedProperties.MaxHp.Value = 100;  
+
+player.Ui.Hint.Value = "РЕЖИМ ПВП ВКЛ!"; 
+
+}  
+
+);  
+pvp.OnExit.Add(function(player) {   
+player.inventory.Melee.Value = false;  
+player.inventory.Melee.Value = false;  
+player.inventory.Main.Value = false;  
+
+player.inventory.Secondary.Value = false;  
+player.ContextedProperties.SkinType.Value = 0;  
+player.ContextedProperties.MaxHp.Value = 100;  
+
+player.Ui.Hint.Value = "РЕЖИМ ПВП ВЫКЛ!"; 
+
 var ин = AreaPlayerTriggerService.Get("ин");
 ин.Tags = ["ин"];
 ин.Enable = true;
