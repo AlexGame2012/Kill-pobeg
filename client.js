@@ -124,6 +124,12 @@ LeaderBoard.PlayerLeaderBoardValues = [
                 ShortDisplayName: "<color=blue>Статус</color>"
         },
         {
+                Value: "пропуск",
+                DisplayName: "<color=black>Пропуск</color>",
+                ShortDisplayName: "<color=black>Пропуск</color>"
+        },
+        {               
+
                 Value: "Scores",
                 DisplayName: "<color=yellow>⛁⛀</color>",
                 ShortDisplayName: "<color=yellow>⛁⛀</color>"                
@@ -608,24 +614,33 @@ player.inventory.ExplosiveInfinity.Value = true;
 
 player.contextedProperties.inventoryType.Value = 1;
 
+player.Ui.Hint.Value = " ты получил плевок";
+
 });
 var ttr = AreaPlayerTriggerService.Get("ttr");
 ttr.Tags = ["ttr"];
 ttr.Enable = true;
 ttr.OnEnter.Add(function (player, area) {
 player.contextedProperties.inventoryType.Value = false;
+
+player.Ui.Hint.Value = " у тебя забрали плевок";
+
 });
 var зомби = AreaPlayerTriggerService.Get("зомби");
 зомби.Tags = ["зо"];
 зомби.Enable = true;
 зомби.OnEnter.Add(function (player, area) {
 player.contextedProperties.SkinType.Value = 1;
+
+player.Ui.Hint.Value = " ты получил скин зомби";
 });
 var зэк = AreaPlayerTriggerService.Get("зэк");
 зэк.Tags = ["з"];
 зэк.Enable = true;
 зэк.OnEnter.Add(function (player, area) {
 player.contextedProperties.SkinType.Value = 2;
+
+player.Ui.Hint.Value = " ты получил скин зека";
 });
 
 var деф = AreaPlayerTriggerService.Get("деф");
@@ -636,12 +651,12 @@ player.contextedProperties.SkinType.Value = 3;
 });
 
 var рпг = AreaPlayerTriggerService.Get("рпг");  
-рпг.Tags = ["рпг"];  
+рпг.Tags = ["грены"];  
 рпг.Enable = true;  
 рпг.OnEnter.Add(function(player, area){
 
 if(player.Properties.Scores.Value >= 300000){ 
-player.Ui.Hint.Value = "куплены гренаты"; 
+player.Ui.Hint.Value = "куплены гранаты"; 
 player.Properties.Scores.Value -= 300000; 
 player.Inventory.Explosive.Value = true;
 }else{ 
@@ -768,7 +783,7 @@ var дверь = AreaPlayerTriggerService.Get("дверь");
 дверь.Enable = true;
 дверь.OnEnter.Add(function(player){
 
-if (player.Properties.Spawns.Value >= 10000){
+if (player.Properties.Get(пропуск).Value >= 1){
 
 player.Ui.Hint.Value = " *пик*";
 }else{
@@ -788,7 +803,7 @@ key.Tags = ["key"];
 key.Enable = true;
 key.OnEnter.Add(function(player){
 
-player.Properties.Spawns += 10000;
+player.Properties.Get(пропуск).Value += 1;
 
 player.Ui.Hint.Value = "ты получил пропуск";
 });
