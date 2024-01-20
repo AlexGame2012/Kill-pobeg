@@ -124,7 +124,7 @@ LeaderBoard.PlayerLeaderBoardValues = [
                 ShortDisplayName: "<color=blue>Статус</color>"
         },
         {
-                Value: "пропуск",
+                Value: "pro",
                 DisplayName: "<color=black>Пропуск</color>",
                 ShortDisplayName: "<color=black>Пропуск</color>"
         },
@@ -783,7 +783,7 @@ var дверь = AreaPlayerTriggerService.Get("дверь");
 дверь.Enable = true;
 дверь.OnEnter.Add(function(player){
 
-if (player.Properties.Get(пропуск).Value >= 1){
+if (player.Properties.Get(pro).Value >= 1){
 
 player.Ui.Hint.Value = " *пик*";
 }else{
@@ -803,7 +803,7 @@ key.Tags = ["ключ"];
 key.Enable = true;
 key.OnEnter.Add(function(player){
 
-player.Properties.Get(пропуск).Value += 1;
+player.Properties.Get(pro).Value += 1;
 
 player.Ui.Hint.Value = "ты получил пропуск";
 });
