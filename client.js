@@ -810,7 +810,7 @@ var Door2 = AreaPlayerTriggerService.Get("Door2");
 Door2.Tags = ["door2"]; 
 Door2.Enable = true; 
 Door2.OnEnter.Add(function(player) {}); 
-//пв 
+//ах 
 var DoorOpen2 = AreaPlayerTriggerService.Get("DoorOpenTrigger2"); 
 DoorOpen2.Tags = ["пульт2"]; 
 DoorOpen2.Enable = true; 
