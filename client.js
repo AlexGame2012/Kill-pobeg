@@ -805,6 +805,32 @@ DoorOpen.OnEnter.Add(function(player) {
   } 
 });
 
+//ах 
+var Door2 = AreaPlayerTriggerService.Get("Door2"); 
+Door2.Tags = ["door2"]; 
+Door2.Enable = true; 
+Door2.OnEnter.Add(function(player) {}); 
+//пв 
+var DoorOpen2 = AreaPlayerTriggerService.Get("DoorOpenTrigger2"); 
+DoorOpen2.Tags = ["пульт2"]; 
+DoorOpen2.Enable = true; 
+DoorOpen2.OnEnter.Add(function(player) { 
+  if (player.Properties.Get("door").Value >= 1){ 
+  var area = AreaService.GetByTag("door")[0]; 
+  var iter = area.Ranges.GetEnumerator(); 
+  iter.MoveNext(); 
+  MapEditor.SetBlock(iter.Current,474); 
+  player.Properties.Get("door").Value -= 75; 
+  player.Ui.Hint.Value = "вы закрыли дверь"; 
+  }else{ 
+  var area = AreaService.GetByTag("door")[0]; 
+  var iter = area.Ranges.GetEnumerator(); 
+  iter.MoveNext(); 
+  MapEditor.SetBlock(iter.Current,0); 
+  player.Properties.Get("door").Value += 75; 
+  player.Ui.Hint.Value = "вы открыли дверь"; 
+  } 
+});
 
 var дверь = AreaPlayerTriggerService.Get("дверь");
 дверь.Tags = ["дверь"];
