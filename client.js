@@ -815,19 +815,19 @@ var DoorOpen2 = AreaPlayerTriggerService.Get("DoorOpenTrigger2");
 DoorOpen2.Tags = ["пульт2"]; 
 DoorOpen2.Enable = true; 
 DoorOpen2.OnEnter.Add(function(player) { 
-  if (player.Properties.Get("door").Value >= 1){ 
-  var area = AreaService.GetByTag("door")[0]; 
+  if (player.Properties.Get("door2").Value >= 1){ 
+  var area = AreaService.GetByTag("door2")[0]; 
   var iter = area.Ranges.GetEnumerator(); 
   iter.MoveNext(); 
   MapEditor.SetBlock(iter.Current,474); 
-  player.Properties.Get("door").Value -= 75; 
+  player.Properties.Get("door2").Value -= 75; 
   player.Ui.Hint.Value = "вы закрыли дверь"; 
   }else{ 
-  var area = AreaService.GetByTag("door")[0]; 
+  var area = AreaService.GetByTag("door2")[0]; 
   var iter = area.Ranges.GetEnumerator(); 
   iter.MoveNext(); 
   MapEditor.SetBlock(iter.Current,0); 
-  player.Properties.Get("door").Value += 75; 
+  player.Properties.Get("door2").Value += 75; 
   player.Ui.Hint.Value = "вы открыли дверь"; 
   } 
 });
