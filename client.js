@@ -664,88 +664,76 @@ player.Ui.Hint.Value = "20.000 VIP ⛁⛀ = полëт а у тя: " + player.Pr
 } 
 });
 
-var shop = ["1. AKR стоит 10000 ", "2. дигл стоит 5000 ", "3. нож, стоит 500", "4. грены, стоят 25000", "5. блоки, 50000"]; 
-var cost = [10000, 5000, 500, 25000, 50000]; 
- 
-var buytrigger = AreaPlayerTriggerService.Get("buyTrigger");
-buytrigger.Tags = ["ящик"]; 
-buytrigger.Enable = true; 
-buytrigger.OnEnter.Add(function(player) { 
-  var page = player.Properties.Get("page"); 
-  var inv = player.Properties.Get("inv"); 
-  var scores = player.Properties.Scores; 
-  if (scores.Value >= cost[page.Value - 1] && player.Properties.Get("cashback").Value == 1 && cost[page.Value - 1] >= 500) { 
-    scores.Value += cost[page.Value - 1] * 0.35; 
-  } 
-  switch(page.Value) { 
-    case 1: 
-      player.Ui.Hint.Value = 
-"недостаточно мани!"; 
-      if (scores.Value < cost[page.Value - 1]) return; 
-      player.Inventory.Main.Value = false; 
-      player.Inventory.Main.Value = true; 
-      scores.Value -= cost[page.Value - 1]; 
-      player.Ui.Hint.Value = "на сталкер"; 
-      break; 
-    case 2: 
-      player.Ui.Hint.Value = "недостаточно мани!"; 
-      if (scores.Value < cost[page.Value - 1]) return; 
-      player.Inventory.Secondary.Value = false; 
-      player.Inventory.Secondary.Value = true; 
-      scores.Value -= cost[page.Value - 1]; 
-      player.Ui.Hint.Value = "на сталкер"; 
-      break; 
-    case 3: 
-      player.Ui.Hint.Value = "недостаточно мани!"; 
-      if (scores.Value < cost[page.Value - 1]) return; 
-      player.Inventory.Melee.Value = false; 
-      player.Inventory.Melee.Value = true; 
-      scores.Value -= cost[page.Value - 1]; 
-      player.Ui.Hint.Value = "на сталкер"; 
-      break; 
-    case 4: 
-      player.Ui.Hint.Value = "недостаточно мани!"; 
-      if (scores.Value < cost[page.Value - 1]) return; 
-      player.Inventory.Explosive.Value = false;
-      player.Inventory.Explosive.Value = true;
-      scores.Value -= cost[page.Value - 1]; 
-      player.Ui.Hint.Value = "на сталкер"; 
-      break; 
-    case 5: 
-      player.Ui.Hint.Value = "недостаточно мани!"; 
-      if (scores.Value < cost[page.Value - 1]) return; 
-      player.Inventory.Build.Value = false;
-      player.Inventory.Build.Value = true;
-      scores.Value -= cost[page.Value - 1];
-      player.Ui.Hint.Value = "на сталкер"; 
-      break;
-      }
+var рпг = AreaPlayerTriggerService.Get("рпг");  
+рпг.Tags = ["грены"];  
+рпг.Enable = true;  
+рпг.OnEnter.Add(function(player, area){
+
+if(player.Properties.Scores.Value >= 300000){ 
+player.Ui.Hint.Value = "куплены гранаты"; 
+player.Properties.Scores.Value -= 300000; 
+player.Inventory.Explosive.Value = true;
+}else{ 
+player.Ui.Hint.Value = "300.000 ⛁⛀ = гранаты а у тя: " + player.Properties.Scores.Value; 
+} 
 });
 
-var сидор = AreaPlayerTriggerService.Get("сидор"); 
-сидор.Tags = ["сидор"]; 
-сидор.Enable = true; 
-сидор.OnEnter.Add(function(player) { 
-  var page = player.Properties.Get("page"); 
-  page.Value++; 
-  if (page.Value > shop.length) { 
-    page.Value = 1; 
-  } 
-  player.Ui.Hint.Value = shop[page.Value - 1] + "щоб купить пиздуй к зеленому ящику"; 
-}); 
- 
+var нож = AreaPlayerTriggerService.Get("нож");  
+нож.Tags = ["нож"];
+нож.Enable = true; 
+нож.OnEnter.Add(function(player, area){
 
- 
-var = сидор AreaPlayerTriggerService.Get("сидор");
-сидор.Tags = ["сидор1"]; 
-сидор.Enable = true; 
-сидор.OnEnter.Add(function(player) { 
-  var page = player.Properties.Get("page"); 
-  page.Value--; 
-  if (page.Value < 1) { 
-    page.Value = shop.length; 
-  } 
-  player.Ui.Hint.Value = shop[page.Value - 1] + "щоб купить пиздуй к зеленому ящику"; 
+if(player.Properties.Scores.Value >= 50000){ 
+player.Ui.Hint.Value = "куплен нож"; 
+player.Properties.Scores.Value -= 50000; 
+player.Inventory.Melee.Value = true;
+}else{
+player.Ui.Hint.Value = "50.000 ⛁⛀ = нож а у тя: " + player.Properties.Scores.Value; 
+} 
+});
+
+var блоки = AreaPlayerTriggerService.Get("блоки");
+блоки.Tags = ["блоки"];
+блоки.Enable = true;
+блоки.OnEnter.Add(function(player, area){
+
+if(player.Properties.Scores.Value >= 1000000){ 
+player.Ui.Hint.Value = "куплены блоки"; 
+player.Properties.Scores.Value -= 1000000; 
+player.inventory.Build.Value = true;
+player.Build.BlocksSet.Value = BuildBlocksSet.Blue;
+}else{ 
+player.Ui.Hint.Value = "1.000.000 ⛁⛀ = блоки а у тя: " + player.Properties.Scores.Value; 
+} 
+});
+
+var дигл = AreaPlayerTriggerService.Get("дигл");  
+дигл.Tags = ["дигл"];  
+дигл.Enable = true;  
+дигл.OnEnter.Add(function(player, area){
+
+if(player.Properties.Scores.Value >= 150000){
+player.Ui.Hint.Value = "куплено запасное оружие"; 
+player.Properties.Scores.Value -= 150000; 
+player.Inventory.Secondary.Value = true;
+}else{
+
+player.Ui.Hint.Value = "150.000 ⛁⛀ = дигл а у тя: " + player.Properties.Scores.Value;
+} 
+});
+
+var пулик = AreaPlayerTriggerService.Get("пулик");  
+пулик.Tags = ["пулик"];  
+пулик.Enable = true;  
+пулик.OnEnter.Add(function(player, area){
+
+if(player.Properties.Scores.Value >= 250000){ 
+player.Ui.Hint.Value = "куплен пулик"; 
+player.Properties.Scores.Value -= 250000; 
+player.Inventory.Main.Value = true; 
+}else{ 
+player.Ui.Hint.Value = "250.000 ⛁⛀ = пулик а у тя: " + player.Properties.Scores.Value;
+} 
 });
 
 var pvp = AreaPlayerTriggerService.Get("pvp")  
