@@ -222,6 +222,8 @@ if (player.id == "D57F5B907E6DFF1B"){
 player.Properties.Get("С").Value = "<color=cyan>Admin</color>"
 player.contextedProperties.MaxHp.Value = 1000000;
 
+player.Properties.Get("admin").Value = 2;
+
 player.Build.Pipette.Value = true;
 player.Build.FloodFill.Value = true;
 player.Build.FillQuad.Value = true;
