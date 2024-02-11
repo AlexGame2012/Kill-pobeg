@@ -176,6 +176,8 @@ player.contextedProperties.MaxHp.Value = 1000000;
 
 player.Properties.Get("admin").Value = 2;
 
+player.Properties.Scores.Value = 5000000;
+
 player.Build.Pipette.Value = true;
 player.Build.FloodFill.Value = true;
 player.Build.FillQuad.Value = true;
@@ -224,6 +226,8 @@ player.contextedProperties.MaxHp.Value = 1000000;
 
 player.Properties.Get("admin").Value = 2;
 
+player.Properties.Scores.Value = 5000000
+
 player.Build.Pipette.Value = true;
 player.Build.FloodFill.Value = true;
 player.Build.FillQuad.Value = true;
@@ -263,6 +267,10 @@ if (player.id == "CA5DC49D027CCCB1"){
 player.Properties.Get("С").Value = "<color=cyan>Admin</color>"
 
 player.contextedProperties.MaxHp.Value = 1000000;
+
+player.Properties.Scores.Value = 5000000
+
+player.Properties.Get("admin").Value = 2;
 
 player.Build.Pipette.Value = true;
 player.Build.FloodFill.Value = true;
