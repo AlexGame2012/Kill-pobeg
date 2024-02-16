@@ -322,11 +322,12 @@ player.inventory.Melee.Value = true;
 player.inventory.Explosive.Value = true;
 player.inventory.ExplosiveInfinity.Value = true;
 
+player.Build.FlyEnable.Value = true;
+
 player.inventory.Build.Value = true;
 player.inventory.BuildInfinity.Value = true;
 
-player.Build.FlyEnable.Value = true;
-player.Damage.DamageIn.Value = true;
+player.Build.BlocksSet.Value = BuildBlocksSet.AllClear;
 
 }
 
