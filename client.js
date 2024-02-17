@@ -307,30 +307,6 @@ player.Build.BlocksSet.Value = BuildBlocksSet.AllClear;
 
  }
 
-if (player.id == "D9C9522E4862E56"){
-
-player.Properties.Get("С").Value = "<color=purple>MoDeR</color>"
-player.contextedProperties.MaxHp.Value = 10000;
-
-player.inventory.Main.Value = true;
-player.inventory.MainInfinity.Value = true;
-player.inventory.Secondary.Value = true;
-player.inventory.SecondaryInfinity.Value = true;
-
-player.inventory.Melee.Value = true;
-
-player.inventory.Explosive.Value = true;
-player.inventory.ExplosiveInfinity.Value = true;
-
-player.Build.FlyEnable.Value = true;
-
-player.inventory.Build.Value = true;
-player.inventory.BuildInfinity.Value = true;
-
-player.Build.BlocksSet.Value = BuildBlocksSet.AllClear;
-
-}
-
 if (player.id == "9183CF2B463E5CD6"){
 
 player.Properties.Get("С").Value = "<color=purple>MoDeR</color>"
