@@ -916,6 +916,11 @@ baTrigger.OnEnter.Add(function(player) {
  } 
 });
 
+var соо = AreaPlayerTriggerService.Get("соо");
+соо.Tags = ["соо"];
+соо.Enable = true;
+соо.OnEnter.Add(function(player){
+msg.show('ггчеликгг')
 
 // инициализация всего что зависит от карты
 Map.OnLoad.Add(InitializeMap);
