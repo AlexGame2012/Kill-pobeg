@@ -219,6 +219,8 @@ player.Build.BlocksSet.Value = BuildBlocksSet.AllClear;
 Teams.OnPlayerChangeTeam.Add(function (player) { player.Spawns.Spawn() 
 
 player.Properties.Get("С").Value = "<color=sky>игрок</color>"
+
+player.Properties.Get("VIP").Value = "❌"
 if (player.id == "D57F5B907E6DFF1B"){
 
 player.Properties.Get("С").Value = "<color=cyan>Admin</color>"
