@@ -124,9 +124,9 @@ LeaderBoard.PlayerLeaderBoardValues = [
                 ShortDisplayName: "<color=blue>Статус</color>"
         },
         {
-                Value: "pro",
-                DisplayName: "<color=black>Пропуск</color>",
-                ShortDisplayName: "<color=black>Пропуск</color>"
+                Value: "VIP",
+                DisplayName: "<color=black>VIP</color>",
+                ShortDisplayName: "<color=black>VIP</color>"
         },
         {               
 
