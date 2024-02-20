@@ -725,6 +725,53 @@ player.Ui.Hint.Value = "250.000 ⛁⛀ = пулик а у тя: " + player.Prope
 } 
 });
 
+var VIP =
+VIP.Tags = ["VIP"];                                                            VIP.Enable = true;  
+VIP.OnEnter.Add(function(player, area){
+
+ AreaPlayerTriggerService.Get("VIP");
+VIP.Tags = 
+if(player.Properties.Scores.Value >= 40000){ 
+player.Ui.Hint.Value = "куплен VIP"; 
+player.Properties.Scores.Value -= 40000; 
+player.Properties.Get("VIP").Value = "✅"
+}else{ 
+player.Ui.Hint.Value = "40.000 ⛁⛀ = VIP а у тя: " + player.Properties.Scores.Value; 
+} 
+});
+
+var дигл = AreaPlayerTriggerService.Get("дигл");  
+дигл.Tags = ["дигл"];  
+дигл.Enable = true;  
+дигл.OnEnter.Add(function(player, area){
+
+if(player.Properties.Scores.Value >= 150000){
+player.Ui.Hint.Value = "куплено запасное оружие"; 
+player.Properties.Scores.Value -= 150000; 
+player.Inventory.Secondary.Value = true;
+}else{
+
+player.Ui.Hint.Value = "150.000 ⛁⛀ = дигл а у тя: " + player.Properties.Scores.Value;
+} 
+});
+
+var пулик = AreaPlayerTriggerService.Get("пулик");  
+пулик.Tags = ["пулик"];  
+пулик.Enable = true;  
+пулик.OnEnter.Add(function(player, area){
+
+if(player.Properties.Scores.Value >= 250000){ 
+player.Ui.Hint.Value = "куплен пулик"; 
+player.Properties.Scores.Value -= 250000; 
+player.Inventory.Main.Value = true; 
+}else{ 
+player.Ui.Hint.Value = "250.000 ⛁⛀ = пулик а у тя: " + player.Properties.Scores.Value;
+} 
+});
+
+
+
+
 var pvp = AreaPlayerTriggerService.Get("pvp")  
 pvp.Tags = ["pvp"];    
 pvp.Enable = true;    
@@ -918,13 +965,7 @@ baTrigger.OnEnter.Add(function(player) {
  } 
 });
 
-var соо = AreaPlayerTriggerService.Get("соо");
-соо.Tags = ["соо"];
-соо.Enable = true;
-соо.OnEnter.Add(function(player){
-msg.show("ггчеликгг");
- } 
-});
+
 
 // инициализация всего что зависит от карты
 Map.OnLoad.Add(InitializeMap);
