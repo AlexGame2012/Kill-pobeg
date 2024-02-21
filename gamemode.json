@@ -1,11 +1,10 @@
-{
-  "Name": "<color=blue>ПаРкУр</color> На АдМиНкУ",
-  "Description": "ПАРКУР НА АДМ + ПОКУПКИ <color=red>Автор: Alex и вопрося</color>",
-  "StartClientVersion": 390,
+  "Name": "PEACE",
+  "Description": "Мирный режим",
+  "StartClientVersion": 334,
   "MapLists": [
     {
       "MapListId": 324,
-      "Name": "Карты Для режима"
+      "Name": "Официальные карты"
     }
   ],
   "Parameters": {
@@ -23,12 +22,12 @@
         "DisplayName": "GmParams/LoosenBlocks"
       },
       {
-        "Name": "ПУПСЫ",
+        "Name": "RedTeam",
         "DisplayName": "Teams/Red",
         "Default": true
       },
       {
-        "Name": "ТЕСТЕРЫ",
+        "Name": "BlueTeam",
         "DisplayName": "Teams/Blue",
         "Default": true
       },
@@ -47,6 +46,11 @@
       {
         "Name": "RemoveQuad",
         "DisplayName": "GmParams/RemoveQuad"
+      },
+      {
+        "Name": "Fly",
+        "DisplayName": "GmParams/Fly",
+        "Default": true
       }
     ]
   }
