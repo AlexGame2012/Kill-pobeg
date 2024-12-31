@@ -725,12 +725,12 @@ player.Ui.Hint.Value = "250.000 ⛁⛀ = пулик а у тя: " + player.Prope
 } 
 });
 
-var VIP =
-VIP.Tags = ["VIP"];                                                            VIP.Enable = true;  
+var VIP = AreaPlayerTriggerService.Get("VIP");
+VIP.Tags = ["VIP"];    
+VIP.Enable = true;  
 VIP.OnEnter.Add(function(player, area){
 
- AreaPlayerTriggerService.Get("VIP");
-VIP.Tags = 
+
 if(player.Properties.Scores.Value >= 40000){ 
 player.Ui.Hint.Value = "куплен VIP"; 
 player.Properties.Scores.Value -= 40000; 
